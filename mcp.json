@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ironmem": {
+      "command": "${IRONMEM_BINARY}",
+      "args": ["mcp"]
+    }
+  }
+}

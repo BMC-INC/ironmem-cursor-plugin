@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+IRONMEM.md
+*.db
+*.db-wal
+*.db-shm
+.env
+.env.*
+validation-local.json
