@@ -60,8 +60,15 @@ def install(binary, destination=None, source=ROOT):
                 shutil.copy2(origin, output)
         path = stage / '.cursor-plugin/plugin.json'
         manifest = json.loads(path.read_text(encoding='utf-8'))
-        manifest['variables']['properties']['IRONMEM_BINARY']['default'] = str(binary)
+        # Cursor's local-plugin loader does not substitute variable defaults.
+        # Resolve the command in this local copy; Marketplace users configure
+        # the declared variable through Cursor's plugin configuration instead.
+        manifest.pop('variables', None)
         path.write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
+        mcp_path = stage / 'mcp.json'
+        mcp = json.loads(mcp_path.read_text(encoding='utf-8'))
+        mcp['mcpServers']['ironmem']['command'] = str(binary)
+        mcp_path.write_text(json.dumps(mcp, indent=2) + '\n', encoding='utf-8')
         validate(stage)
         desired = hashes(stage)
         if target.exists():

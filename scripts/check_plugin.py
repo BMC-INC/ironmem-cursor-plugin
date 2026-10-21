@@ -6,7 +6,7 @@ from pathlib import Path, PurePosixPath
 import re
 
 ROOT = Path(__file__).resolve().parent.parent
-PAYLOAD = ('.cursor-plugin', 'mcp.json', 'assets', 'skills', 'rules', 'commands',
+PAYLOAD = ('.cursor-plugin', 'mcp.json', 'assets', 'skills', 'rules', 'commands', 'docs',
            'README.md', 'PRIVACY.md', 'TERMS.md', 'SECURITY.md', 'LICENSE', 'NOTICE')
 
 
@@ -59,19 +59,24 @@ def validate(root=ROOT):
         raise ValueError('logo is not a PNG')
     for key in ('skills', 'rules', 'commands', 'mcpServers'):
         relative_path(root, manifest[key])
-    variables = manifest['variables']
+    variables = manifest.get('variables', {'type': 'object', 'properties': {}})
     if variables.get('type') != 'object' or not isinstance(variables.get('properties'), dict):
         raise ValueError('variables must be an object JSON Schema')
     config = json.loads((root / manifest['mcpServers']).read_text(encoding='utf-8'))
     referenced = set(re.findall(r'\$\{([A-Z_][A-Z_0-9]*)\}', json.dumps(config)))
-    if referenced != set(variables['properties']):
-        raise ValueError('MCP variables must match declared plugin variables')
+    if not referenced.issubset(variables['properties']):
+        raise ValueError('every MCP variable must be declared in the plugin manifest')
     servers = config.get('mcpServers', {})
     if set(servers) != {'ironmem'}:
         raise ValueError('package must define the local ironmem server')
     server = servers['ironmem']
-    if server != {'command': '${IRONMEM_BINARY}', 'args': ['mcp']}:
+    command = server.get('command', '')
+    templated = command == '${IRONMEM_BINARY}'
+    configured = isinstance(command, str) and Path(command).is_absolute() and not referenced
+    if set(server) != {'command', 'args'} or server.get('args') != ['mcp'] or not (templated or configured):
         raise ValueError('MCP must directly launch IronMem stdio without a shell or listener')
+    if templated and 'IRONMEM_BINARY' not in variables.get('required', []):
+        raise ValueError('Marketplace installs must configure the executable path explicitly')
     components = {}
     for kind, pattern in (('skills', '*/SKILL.md'), ('rules', '*.mdc'), ('commands', '*.md')):
         paths = sorted(relative_path(root, manifest[kind]).glob(pattern))

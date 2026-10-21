@@ -30,7 +30,8 @@ before using those features.
 ## Development installer and checks
 
 `scripts/install_plugin.py` copies this repository's plugin files to Cursor's
-local plugin folder, records the selected executable path in that copy, and
+local plugin folder, writes the selected executable path into that copy's MCP
+configuration, and
 backs up a previous differing copy. It reads the executable's `--version` output.
 It does not read the memory database or alter assistant settings.
 

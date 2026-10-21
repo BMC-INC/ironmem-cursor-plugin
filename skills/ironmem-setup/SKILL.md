@@ -11,10 +11,11 @@ description: Set up or diagnose IronMem's local MCP connection in Cursor when it
    `$HOME/.ironmem/bin/ironmem` on macOS/Linux and
    `%USERPROFILE%\.ironmem\bin\ironmem.exe` on Windows. Verify it with `--version`.
    Do not download or execute an unrelated binary.
-3. Set the plugin's `IRONMEM_BINARY` configuration to its absolute path, without
+3. For a Marketplace install, set `IRONMEM_BINARY` to the absolute path, without
    shell quotes or extra arguments. The MCP definition already supplies `mcp`.
    For a local checkout, `scripts/install_plugin.py --binary PATH` creates a local
-   copy with that default. Reload Cursor and enable the MCP server if prompted.
+   copy with an explicit executable command. Rerun it if the binary moves.
+   Reload Cursor and enable the MCP server if prompted.
 4. Avoid duplicate manual and plugin MCP entries. Preserve other servers and all
    existing memory data. No API key or public listener is needed for stdio.
 5. Use IronMem's existing settings. Do not enable cloud features to repair an MCP

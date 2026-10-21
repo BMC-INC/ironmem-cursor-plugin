@@ -19,9 +19,9 @@
         "type": "string",
         "title": "IronMem executable",
         "description": "Absolute path to your installed IronMem executable. Use ironmem only if it is on Cursor's PATH. Do not include arguments or shell quotes.",
-        "default": "ironmem",
         "minLength": 1
       }
-    }
+    },
+    "required": ["IRONMEM_BINARY"]
   }
 }

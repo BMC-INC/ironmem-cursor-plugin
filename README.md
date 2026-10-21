@@ -55,10 +55,12 @@ py -3 scripts/install_plugin.py --binary "$env:USERPROFILE\.ironmem\bin\ironmem.
 ```
 
 This copies the plugin into `~/.cursor/plugins/local/ironmem` and puts the
-absolute executable path into the local copy's variable default. It preserves
+absolute executable path directly into the local copy's MCP configuration. It preserves
 Cursor's other MCP servers and settings. An existing different plugin copy is
 retained in a backup before replacement; identical reinstalls write nothing.
 The source repository and installed runtime are unchanged by this command.
+Local copies contain a resolved command, since Cursor's local loader does not
+substitute Marketplace variable defaults. Rerun this installer if the binary moves.
 
 Restart Cursor or run **Developer: Reload Window**, then open **Customize** and
 check that IronMem's skills, rule, commands, and MCP server are present. Enable
@@ -74,10 +76,10 @@ alone so you can choose which one to keep.
 
 This repository is prepared for review; it is not an approved Marketplace
 listing. After installing through a marketplace, set `IRONMEM_BINARY` in the
-plugin's **Configure** settings to the absolute executable path. Enter the path
-alone, without quotes or `mcp` arguments. The default `ironmem` works only when
-that command is visible on Cursor's PATH. GUI applications may have a different
-PATH from your terminal.
+plugin's **Configure** settings to the absolute executable path. This is a
+required configuration value. Enter the path alone, without quotes or `mcp`
+arguments. A bare `ironmem` command works only when it is visible on Cursor's
+PATH; GUI applications may have a different PATH from your terminal.
 
 No token, hosted account, public endpoint, or HTTP bearer credential is required
 for the stdio integration. The plugin inherits the runtime's existing settings;
