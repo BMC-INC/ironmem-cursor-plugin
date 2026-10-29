@@ -5,6 +5,21 @@
 Local-first project memory for Cursor. Recall relevant project decisions, keep
 user-approved facts, and expand remembered evidence through IronMem's MCP tools.
 
+[![Package checks](https://github.com/BMC-INC/ironmem-cursor-plugin/actions/workflows/validate.yml/badge.svg)](https://github.com/BMC-INC/ironmem-cursor-plugin/actions/workflows/validate.yml)
+[![License: Apache-2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](LICENSE)
+
+[Install locally](#install-the-plugin-locally) · [Use it](#use-it) · [Validation](docs/VALIDATION.md) · [Privacy](PRIVACY.md)
+
+## At a glance
+
+| | |
+| --- | --- |
+| Purpose | Bring project decisions and source-backed recall into Cursor. |
+| Package | Version 0.1.0; skills, commands, a rule, and a stdio MCP definition. |
+| Runtime | IronMem is installed separately; this plugin ships no executable. |
+| Availability | Local installation is supported. Marketplace approval is not claimed. |
+| Capture | Explicit recall and user-requested saving; no automatic conversation capture. |
+
 This is the Cursor plugin repository. The Rust runtime lives in
 [BMC-INC/Iron-mem](https://github.com/BMC-INC/Iron-mem) and continues to support
 Claude Code, Claude Desktop, and other MCP clients independently.
@@ -41,6 +56,11 @@ or start an HTTP listener.
 
 From a checkout of this repository, run one of these commands. Python 3.9+ is
 needed for this development installer, not for the plugin's normal MCP operation.
+
+```sh
+git clone https://github.com/BMC-INC/ironmem-cursor-plugin.git
+cd ironmem-cursor-plugin
+```
 
 macOS / Linux:
 
@@ -98,6 +118,12 @@ The rule keeps recall scoped to the current project and treats remembered
 content as evidence to verify. Saving information requires user intent. This
 plugin does not add Cursor lifecycle hooks or automatically capture tool input,
 tool output, or whole conversations.
+
+For a first check in Cursor, run **/ironmem-status**, then ask it to remember a
+harmless project fact and recall that fact in the same project. A connected
+server plus a successful save-and-recall is the acceptance check; simply seeing
+the plugin's name in Customize is not enough. Review the recalled source before
+using memory to make a consequential change.
 
 ## Verify the package
 
