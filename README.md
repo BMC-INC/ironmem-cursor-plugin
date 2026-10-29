@@ -15,7 +15,7 @@ user-approved facts, and expand remembered evidence through IronMem's MCP tools.
 | | |
 | --- | --- |
 | Purpose | Bring project decisions and source-backed recall into Cursor. |
-| Package | Version 0.1.0; skills, commands, a rule, and a stdio MCP definition. |
+| Package | Version 0.1.1; skills, commands, a rule, and a stdio MCP definition. |
 | Runtime | IronMem is installed separately; this plugin ships no executable. |
 | Availability | Local installation is supported. Marketplace approval is not claimed. |
 | Capture | Explicit recall and user-requested saving; no automatic conversation capture. |
@@ -32,7 +32,7 @@ their own data flows, described in [PRIVACY.md](PRIVACY.md).
 
 ## Prerequisite: install IronMem
 
-Use IronMem 0.4.0 built from commit
+Use the IronMem 0.4.1 release or a 0.4.0 build from commit
 [`56c39ce`](https://github.com/BMC-INC/Iron-mem/commit/56c39ce4fccc7cbba2ffb603de6cb648048a3e41)
 or later. The version number alone does not distinguish older 0.4.0 builds.
 Follow the core project's

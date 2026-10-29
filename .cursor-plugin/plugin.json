@@ -1,12 +1,20 @@
 {
   "name": "ironmem",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Local-first project memory for Cursor, powered by the separately installed IronMem MCP server.",
-  "author": { "name": "ExecLayer Inc." },
+  "author": {
+    "name": "ExecLayer Inc."
+  },
   "homepage": "https://github.com/BMC-INC/ironmem-cursor-plugin",
   "repository": "https://github.com/BMC-INC/ironmem-cursor-plugin",
   "license": "Apache-2.0",
-  "keywords": ["memory", "mcp", "local-first", "coding", "context"],
+  "keywords": [
+    "memory",
+    "mcp",
+    "local-first",
+    "coding",
+    "context"
+  ],
   "logo": "assets/ironmem.png",
   "mcpServers": "mcp.json",
   "skills": "skills/",
@@ -22,6 +30,8 @@
         "minLength": 1
       }
     },
-    "required": ["IRONMEM_BINARY"]
+    "required": [
+      "IRONMEM_BINARY"
+    ]
   }
 }
