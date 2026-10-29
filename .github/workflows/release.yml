@@ -1,0 +1,39 @@
+name: Release plugin
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*.*.*']
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/check_plugin.py
+      - run: python -m unittest discover -s tests -v
+      - name: Validate version and package tracked source
+        run: |
+          version=$(python -c 'import json; print(json.load(open(".cursor-plugin/plugin.json"))["version"])')
+          if [[ "$GITHUB_REF" == refs/tags/* ]]; then test "$GITHUB_REF_NAME" = "v$version"; fi
+          mkdir dist
+          git archive --format=zip --prefix=ironmem-cursor-plugin/ -o "dist/ironmem-cursor-plugin-v$version.zip" HEAD
+          cd dist
+          sha256sum -- *.zip > SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ironmem-cursor-plugin
+          path: dist/*
+      - uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          body_path: docs/releases/${{ github.ref_name }}.md
+          files: dist/*
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
